@@ -1,40 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../assets/logo.svg';
 import './Login.css';
+import api from '../services/api';
 
-interface IProps { }
-interface IState { username: string }
+export default function Login(props: any) {
+    const [ username, setUsername ] = useState('');
 
-export default class Login extends React.Component<IProps, IState>{
-    constructor(props: Readonly<IProps>){
-        super(props);
-        this.state = {username: ''};
-    }
-
-    handleUsernameChange = (event: any) => {
-        this.setState({ username: event.target.value });
-    }
-
-    handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) =>{
         event.preventDefault();
-        console.log(this.state.username);
+        
+        const response = await api.post('/devs', {username});
+        const { _id } = response.data;
+
+        props.history.push(`/dev/${_id}`);
     }
 
-    render() {
-        return (
-            <div className="login-container">
-
-                <form onSubmit={this.handleSubmit}>
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <input
-                        type="text"
-                        placeholder="Enter with your github username"
-                        value={this.state.username}
-                        onChange={this.handleUsernameChange}
-                    />
-                    <button type="submit">Send!</button>
-                </form>
-            </div>
-        );
-    }
+    return(
+        <div className="login-container">
+            <form onSubmit={handleSubmit}>
+                <img src={logo} className="App-logo" alt="logo" />
+                <input
+                    type="text"
+                    placeholder="Enter with your github username"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                />
+                <button type="submit">Send!</button>
+            </form>
+        </div>
+    )
 }
