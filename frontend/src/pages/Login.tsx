@@ -18,7 +18,7 @@ export default function Login(props: any) {
     return(
         <div className="login-container">
             <form onSubmit={handleSubmit}>
-                <img src={logo} className="App-logo" alt="logo" />
+                <img src={logo} className="login-logo" alt="logo" />
                 <input
                     type="text"
                     placeholder="Enter with your github username"

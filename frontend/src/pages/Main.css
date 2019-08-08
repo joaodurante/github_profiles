@@ -1,12 +1,12 @@
-.App-logo{
-    max-width: 50px;
-}
-
 .main-container{
     max-width: 980px;
     margin: 0 auto;
     padding: 50px 0;
     text-align: center;
+}
+
+.main-logo{
+    height: 100px;
 }
 
 .main-container ul{
@@ -69,4 +69,11 @@
 .main-container ul li .buttons button:hover img{
     transform: translateY(-2px);
     transition: all .2s;
+}
+
+.main-container .empty{
+    font-size: 32px;
+    color: #999;
+    font-weight: bold;
+    margin-top: 300px;
 }

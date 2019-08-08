@@ -5,16 +5,16 @@
     align-items: center;
 }
 
+.login-logo{
+    height: 100px;
+    margin-bottom: 30px;
+}
+
 .login-container form{
     width: 100%;
     max-width: 300px;
     display: flex;
     flex-direction: column;
-}
-
-.App-logo{
-    max-width: 100px;
-    margin-bottom: 20px;
 }
 
 .login-container form input{
