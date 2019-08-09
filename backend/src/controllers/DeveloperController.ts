@@ -32,18 +32,18 @@ export class DeveloperController {
             if(userExists)
                 return res.json(userExists);
 
-            else{
-                const response = await axios.get(`${env.github.userApi}/${username}`);
+            
+            const response = await axios.get(`${env.github.userApi}/${username}`);
 
-                let document = await Developer.create({
-                    name: response.data.name,
-                    username: response.data.login,
-                    bio: response.data.bio,
-                    avatar: response.data.avatar_url
-                });
-        
-                return res.json(document);
-            }
+            let document = await Developer.create({
+                name: response.data.name,
+                username: response.data.login,
+                bio: response.data.bio,
+                avatar: response.data.avatar_url
+            });
+    
+            return res.json(document);
+            
         }catch(e){
             throw new DefaultError(e.status, e.message, e.stack);
         }

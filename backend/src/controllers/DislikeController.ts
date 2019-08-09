@@ -2,8 +2,8 @@ import { Developer } from '../models/Developer';
 import DefaultError from '../common/DefaultError';
 
 export class DislikeController{
-    try{
-        store = async (req, res) => {
+    store = async (req, res) => {
+        try{
             const {devId} = req.params;
             const {user} = req.headers;
     
@@ -17,8 +17,8 @@ export class DislikeController{
             await loggedUser.save();
             return res.json(loggedUser);
             
+        }catch(e){
+            throw new DefaultError(e.status, e.message, e.stack);
         }
-    }catch(e){
-        throw new DefaultError(e.status, e.message, e.stack);
     }
 }

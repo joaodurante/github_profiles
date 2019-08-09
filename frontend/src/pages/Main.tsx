@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import io from 'socket.io-client';
 import './Main.css';
 import logo from '../assets/logo.svg';
 import like from '../assets/like.svg';
 import dislike from '../assets/dislike.svg';
+import matchImg from '../assets/itsamatch.png';
 import api from '../services/api';
 
 export default function Main(props: any){
     const [ users, setUsers ]: [any[], any] = useState([]);
+    const [ match, setMatch ]: [any, any] = useState(null);
 
     useEffect(()=>{
         const loadUsers = async () => {
@@ -20,6 +23,18 @@ export default function Main(props: any){
         }
 
         loadUsers();
+    }, [props.match.params.id]);
+
+    useEffect(() => {
+        const socket = io('http://localhost:3333', {
+            query: {
+                user: props.match.params.id
+            }
+        });
+        socket.on('match', (dev: any) => {
+            setMatch(dev);
+        });
+
     }, [props.match.params.id]);
 
     async function handleLike(id: string){
@@ -38,6 +53,10 @@ export default function Main(props: any){
             }
         });
         setUsers( users.filter(user => user._id !== id) );
+    }
+
+    async function handleClickMatch(){
+        setMatch(false);
     }
 
     return (
@@ -70,6 +89,19 @@ export default function Main(props: any){
             ) : (
                 <div className="empty">
                     There is no more profiles to show
+                </div>
+            )}
+
+            { match && (
+                <div className="match-container">
+                    <img src={matchImg} alt="It's a match!"></img>
+                    <img className="avatar" src={match.avatar} alt=""></img>
+                    <strong>{match.name}</strong>
+                    <p>{match.bio}</p>
+
+                    <button type="button" onClick={ handleClickMatch }>
+                        Close
+                    </button>
                 </div>
             )}
         </div>
